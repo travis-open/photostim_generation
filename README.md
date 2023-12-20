@@ -1,1 +1,2 @@
 # stimset_building
+Code to generate stimsets with specified grid dimensions and then sort in a manner to maximize the distance between successive stimuli. Intended to be used in CRACM/sCRACM style neurophysiology experiments. Code to transform images and upload to Mightex Polygon 400 tracked here https://github.com/travis-open/ephys_file_manager. Particulars of each repo are suited to my specific hardware case.
