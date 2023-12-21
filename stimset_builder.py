@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 from pathlib import Path
 from scipy import ndimage
 import random
+import datetime
 
 ##functions to build stimsets and optimize order to avoid nearby locations
 ##2-opt algorithm from https://stackoverflow.com/questions/25585401/travelling-salesman-in-scipy
@@ -152,4 +153,5 @@ class StimPatternSet():
         self.name = name
         self.n_patterns = stim_pattern.shape[2]
         self.sequence_list = sequence_list ##list of indices from orignal order
+        self.time_created = datetime.datetime.now()
 
