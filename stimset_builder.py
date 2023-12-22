@@ -138,20 +138,38 @@ def two_opt_long(coms,improvement_threshold, r_seed = 42): # 2-opt Algorithm ada
 		improvement_factor = best_distance/distance_to_beat -1 # Calculate how much the route has improved.
 	return route # When the route is no longer improving substantially, stop searching and return the route.
 
-def reorder_stimset(original_stimset, route):
-    assert len(route) == original_stimset.shape[2], "mismatch in route and stimset dimensions"
-    new_stimset = np.zeros(original_stimset.shape, dtype=np.uint8)
-    for i in range(len(route)):
-        stim_index = route[i]
-        stim_pattern = original_stimset[:,:,stim_index]
-        new_stimset[:,:,i] = stim_pattern
-    return new_stimset
 
-class StimPatternSet():
-    def __init__(self, stim_pattern, name, sequence_list):
-        self.stim_pattern = stim_pattern
+
+class StimSequenceSet():
+    def __init__(self, image_sequence, name, sequence_dict):
+        self.image_sequence = image_sequence
         self.name = name
-        self.n_patterns = stim_pattern.shape[2]
-        self.sequence_list = sequence_list ##list of indices from orignal order
+        self.n_patterns = image_sequence.shape[2]
+        self.sequence_dict = sequence_dict
         self.time_created = datetime.datetime.now()
 
+    def get_single_image(self, i):
+        return self.image_sequence[:,:,i]
+    
+    def get_ordered_seq(self, order):
+        original_stimset = self.image_sequence
+        assert len(order) == original_stimset.shape[2], "mismatch in route and stimset dimensions"
+        new_stimset = np.zeros(original_stimset.shape, dtype=np.uint8)
+        for i in range(len(order)):
+            stim_index = order[i]
+            stim_pattern = self.get_single_image(stim_index)
+            new_stimset[:,:,i] = stim_pattern
+        return new_stimset
+        
+    def get_ordered_seq_by_name(self, order_name):
+        order = self.get_order_by_name(order_name)
+        new_stimset = self.get_ordered_seq(order)
+        return new_stimset
+
+    def get_default_seq(self):
+    	new_stimset = self.get_ordered_seq_by_name('default')
+    	return new_stimset
+
+    def get_order_by_name(self, order_name):
+    	order = self.sequence_dict[order_name]
+    	return order
