@@ -225,9 +225,8 @@ class StimSequenceSet():
         return self.image_sequence[:,:,i]
     
     def get_ordered_seq(self, order):
-        original_stimset = self.image_sequence
-        assert len(order) == original_stimset.shape[2], "mismatch in route and stimset dimensions"
-        new_stimset = np.zeros(original_stimset.shape, dtype=np.uint8)
+        new_stimset = np.zeros(self.image_shape+(len(order),),
+        	dtype=np.uint8)
         for i in range(len(order)):
             stim_index = order[i]
             stim_pattern = self.get_single_image(stim_index)
@@ -246,3 +245,9 @@ class StimSequenceSet():
     def get_order_by_name(self, order_name):
     	order = self.sequence_dict[order_name]
     	return order
+
+    def get_summed_image(self, image_list):
+    	summed_image = np.zeros(self.image_shape, dtype = np.uint8)
+    	for i in image_list:
+    		summed_image += self.image_sequence[:, :, i]
+    	return summed_image
