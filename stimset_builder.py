@@ -19,10 +19,10 @@ def draw_rect(n_cols, n_rows, i_col, i_row, img_w=1024, img_h=1024, plot = False
 	'''
     ##margins correspond to region of camera image covered by DMD. Only relevant for 1024x1024.
     ##maybe require 1024x1024 image until better solution determined
-	left_margin = 20 
-	right_margin =120 
-	upper_margin =120 
-	lower_margin = 397
+	left_margin = 148 
+	right_margin =268 
+	upper_margin =168 
+	lower_margin = 336
 	sub_w = img_w - left_margin - right_margin
 	sub_h = img_h - upper_margin - lower_margin
 	rect_width = math.floor(sub_w/n_cols) - 1
@@ -177,10 +177,10 @@ def polygon(sides, radius=1, rotation=0, translation=None):
 	return points
 
 def draw_hex(n_cols, n_rows, i_col, i_row, img_w = 1024, img_h = 1024, plot = False):
-	left_margin = 20 
-	right_margin =120 
-	upper_margin =120 
-	lower_margin = 397
+	left_margin = 148 
+	right_margin =268 
+	upper_margin =168 
+	lower_margin = 336
 	sub_w = img_w - left_margin - right_margin
 	sub_h = img_h - upper_margin - lower_margin
 	poly_r = math.floor(sub_w/n_cols)/2
@@ -243,6 +243,7 @@ class StimSequenceSet():
     	return new_stimset
 
     def get_order_by_name(self, order_name):
+    	assert order_name in self.sequence_dict, f"The order {order_name} is unknown for this image sequence."
     	order = self.sequence_dict[order_name]
     	return order
 
